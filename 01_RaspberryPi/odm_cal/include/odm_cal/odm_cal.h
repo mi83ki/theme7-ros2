@@ -1,6 +1,8 @@
 #include "ros/ros.h"
 #include "nav_msgs/Odometry.h"
 
+#pragma once
+
 class OdmPublisher
 {
   public:

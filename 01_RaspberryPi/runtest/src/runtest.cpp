@@ -1,9 +1,10 @@
-#include "ros/ros.h"
-#include "std_msgs/String.h"
-#include "turtlesim/Pose.h"
-#include "geometry_msgs/Twist.h"
-#include "math.h"
-#include "nav_msgs/Odometry.h"
+#include <ros/ros.h>
+#include <std_msgs/String.h>
+#include <turtlesim/Pose.h>
+#include <geometry_msgs/Twist.h>
+#include <math.h>
+#include <nav_msgs/Odometry.h>
+#include <tf/transform_broadcaster.h>
 
 #define GET_ARRAY_SIZE(a)   (sizeof(a)/sizeof(a[0]))//
 
@@ -11,7 +12,8 @@ nav_msgs::Odometry input_msg;//subscribeしてくるpose型のメッセージを
 
 float kp1 = 0; //P制御の定数
 float kp2 = 0; //P制御の定数2
-const float point_array[4][2] = {{0.9,0},{0.9,0.9},{0,0.9},{0,0}};//pass point array {x,y}
+//const float point_array[4][2] = {{0.9,0},{0.9,0.9},{0,0.9},{0,0}};//pass point array {x,y}
+const float point_array[4][2] = {{0.5,0},{0.5,0.5},{0,0.5},{0,0}};//pass point array {x,y}
 
 float calc_angle(const float x,const float xn1,const float y,const float yn1);
 void poseCallback(const nav_msgs::Odometry::ConstPtr& msg);
@@ -43,9 +45,11 @@ int main(int argc, char **argv)
                 nav_msgs::Odometry pose_msg = input_msg;//publishするtwist型のメッセージを定義
                 float xn = point_array[point_id][0];
                 float yn = point_array[point_id][1];
-                float temp = pose_msg.pose.pose.orientation.z / (2.0 * M_PI);
+                //float temp = pose_msg.pose.pose.orientation.z / (2.0 * M_PI);
+                float temp = tf::getYaw(pose_msg.pose.pose.orientation) / (2.0 * M_PI);
                 int temp_n = (int)temp;
-                temp = pose_msg.pose.pose.orientation.z - (float)temp_n * 2.0 * M_PI;
+                //temp = pose_msg.pose.pose.orientation.z - (float)temp_n * 2.0 * M_PI;
+                temp = tf::getYaw(pose_msg.pose.pose.orientation) - (float)temp_n * 2.0 * M_PI;
                 if( temp > M_PI){
                   temp -= 2.0 * M_PI;
                 }else if( temp < - M_PI) {
@@ -53,7 +57,7 @@ int main(int argc, char **argv)
                 }
                 switch(mode){
                    case 0:
-                    output_msg.angular.z = 3.0;
+                    output_msg.angular.z = -1.0;
                     angular_n = calc_angle(pose_msg.pose.pose.position.x,xn,pose_msg.pose.pose.position.y,yn);
                     ROS_INFO("I want to go xn:[%f] yn:[%f]",xn,yn);
                     ROS_INFO("x:[%f] y:[%f]",pose_msg.pose.pose.position.x,pose_msg.pose.pose.position.y);
@@ -64,7 +68,7 @@ int main(int argc, char **argv)
                              angular_n,
                              //std::abs(pose_msg.pose.pose.orientation.z - angular_n));
                              std::abs(temp - angular_n));
-                    if(std::abs(temp - angular_n) < 0.175)
+                    if(std::abs(temp - angular_n) < 0.3)
                     {
 
                       mode = 1;
@@ -84,7 +88,7 @@ int main(int argc, char **argv)
                              std::abs(temp - angular_n),
                              pose_msg.pose.pose.position.x - xn,
                              pose_msg.pose.pose.position.y - yn);  
-                    output_msg.linear.x = 0.3;
+                    output_msg.linear.x = 0.10;
                     if(std::abs(temp - angular_n) > 0.3){
 		       mode = 0;
                        output_msg.linear.x = 0;
