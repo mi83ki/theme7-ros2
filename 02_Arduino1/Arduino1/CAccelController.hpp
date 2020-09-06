@@ -17,7 +17,7 @@
 /***********************************************************************/
 
 #define ACCELERATION (1.0f)     // 車体加速度[m/s2]
-#define DECELERATION (1.0f)     // 車体減速度[m/s2]
+#define DECELERATION (2.0f)     // 車体減速度[m/s2]
 
 class CAccelController
 {
@@ -43,4 +43,3 @@ private:
   fix cycleTime;                       // 実行周期[ms]
   fix getAccel(void);
 };
-
