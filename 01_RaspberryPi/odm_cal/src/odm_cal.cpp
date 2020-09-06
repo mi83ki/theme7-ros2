@@ -8,7 +8,7 @@
 #include <tf/transform_broadcaster.h>
 
 #define WHEEL_R         (0.090)       /* 車輪半径(m) */
-#define WHEEL_TREAD     (0.118)       /* 車輪間距離(m) */
+#define WHEEL_TREAD     (0.120)       /* 車輪間距離(m) */
 #define RATE_REDC       (150.0)       /* 減速比 */
 #define RATE_ENC        (3.0)         /* モータ1回転に必要なエンコーダカウント数 */
 
