@@ -1,8 +1,0 @@
-<launch>
- <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
-   <param name="port" value="/dev/ttyAMA0"/>
-   <param name="baud" value="115200"/>
- </node>
- <node pkg="odm_cal" name="odm_cal" type="odm_cal" output = "screen"/>
- <node pkg="runtest2" name="runtest2" type="runtest2" output = "screen"/>
-</launch>
