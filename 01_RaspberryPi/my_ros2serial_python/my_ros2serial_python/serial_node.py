@@ -83,7 +83,9 @@ class SerialNode(Node):
         super().__init__('serial_node')
         # パブリッシャー
         self.pub_enc = self.create_publisher(Int64MultiArray, 'arduino/encoders', 10)
+        print('create publisher: arduino/encoders')
         self.pub_bumper = self.create_publisher(Bool, 'arduino/bumper', 10)
+        print('create publisher: arduino/bumper')
         # サブスクライバー
         self.sub_cmd_vel = self.create_subscription(
             Twist,
@@ -91,6 +93,7 @@ class SerialNode(Node):
             self.cmdVelCallBack,
             10)
         self.sub_cmd_vel    # prevent unused variable warning
+        print('create subscriber: arduino/cmd_vel')
         # サブスクライブ時のコールバック関数
         self.subCallback = None
         # Arduino経過時間[ms]
