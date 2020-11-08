@@ -14,8 +14,8 @@
 /*                         加減速度を制御する                          */
 /***********************************************************************/
 
-static const fix CAccelController::acceleration = FLOAT_TO_FIX(ACCELERATION);
-static const fix CAccelController::deceleration = FLOAT_TO_FIX(DECELERATION);
+const fix CAccelController::acceleration = FLOAT_TO_FIX(ACCELERATION);
+const fix CAccelController::deceleration = FLOAT_TO_FIX(DECELERATION);
 
 CAccelController::CAccelController(uint16_t time) {
   presentVelocity = 0;

@@ -17,10 +17,10 @@
 /*                    Arduino1-Arduino2間通信                          */
 /***********************************************************************/
 // スレーブ受信フラグ
-static uint8_t CComArduinos::i2cRecievedFlag = 0;
+uint8_t CComArduinos::i2cRecievedFlag = 0;
 // スレーブ側の受信割込み動作（Arduino1）
-static void i2cRecieveInterrupt(int numBytes) {
-  CComArduinos::i2cRecievedFlag++;
+void i2cRecieveInterrupt(int numBytes) {
+  CComArduinos::i2cRecievedFlag += numBytes;
 }
 
 // 初期化
