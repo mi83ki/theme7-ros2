@@ -30,11 +30,11 @@ int main(int argc, char * argv[])
   rclcpp::WallRate rate(200ms);
 
   printf("control with keyboard!\r\n");
-  printf("w: forward");
-  printf("a: left");
-  printf("s: back");
-  printf("d: right");
-  printf("b: stop");
+  printf("w: forward\r\n");
+  printf("a: left\r\n");
+  printf("s: back\r\n");
+  printf("d: right\r\n");
+  printf("b: stop\r\n");
 
   while (rclcpp::ok()) {
     char key;
