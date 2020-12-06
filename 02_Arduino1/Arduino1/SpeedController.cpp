@@ -50,7 +50,8 @@ void SpeedController::calcVelocity(int32_t enc, uint32_t time) {
   
     //速度の計算
     velocity = FIX_MUL(omega, (myTireDiameter / 2));
-}
+
+}
 
   //現在の値を保持
   last_enc = enc;
