@@ -24,6 +24,9 @@
 #define ENCODER_PULSE     (3)        // パルス数
 #define TIRE_DIAMETER     (0.09f)    // タイヤの直径[m]
 #define DUTY_RESOLUTION_  (100)
+// 電流不足によるシャットダウン防止
+#define LOW_SPEED         (0.1f)     // 速度が低いと判断するしきい値[m/s]
+#define DUTY_LOW_SPEED    (50)       // 速度が低い時の最大デューティ比（電流制限のための）
 //PID用
 #define PID_CYCLE_TIME    (50)   // PID制御の実行周期 [ms]
 #define SC_KP             (0.25f)  // 比例ゲイン
@@ -44,6 +47,7 @@ class SpeedController
     void calcVelocity(int32_t enc, uint32_t time);
     int16_t controlMotorsSpeed(void);
     int16_t getDuty(void);
+    void setDuty(int16_t duty);
     float getPresentVelocity(void);
     float getTargetVelocity(void);
     void setTargetVelocity(fix targetOmega);
@@ -51,7 +55,7 @@ class SpeedController
   private:
     int32_t last_enc;        //前回のエンコーダ値
     uint32_t last_time;      // [ms]
-    fix duty_status;
+    int16_t duty_int;
     pidType pid_state;
     fix omega;                 // 車輪の回転角速度 [rad/s]
     fix velocity;              // 速度 [m/s]

@@ -83,20 +83,29 @@ int16_t SpeedController::controlMotorsSpeed(void) {
     fixcutoff(&duty, INT_TO_FIX(100), -INT_TO_FIX(100));
   
     //デューティ比をint型に変換
-    duty_status = duty;
+    setDuty(FIX_TO_INT(duty));
   } else {
-    duty_status = 0;
+    setDuty(0);
   }
-  return(duty_status);
+  return(getDuty());
 }
 
 
 int16_t SpeedController::getDuty(void) {
-  if (duty_status == 0) {
-    return(0);
-  } else {
-    return(FIX_TO_INT(duty_status));
+  return(duty_int);
+}
+
+void SpeedController::setDuty(int16_t duty) {
+  // 速度が一定以下の場合、デューティ比の最大値を制限する（電流不足によるシャットダウン防止）
+  if ((getPresentVelocity() < LOW_SPEED) &&
+      (getPresentVelocity() > -LOW_SPEED)) {
+    if (duty > DUTY_LOW_SPEED) {
+      duty = DUTY_LOW_SPEED;
+    } else if (duty < -DUTY_LOW_SPEED) {
+      duty = -DUTY_LOW_SPEED;
+    }
   }
+  duty_int = duty;
 }
 
 float SpeedController::getPresentVelocity(void) {
@@ -111,7 +120,7 @@ void SpeedController::setTargetVelocity(fix targetVelocity) {
   if (targetVelocity == 0) {
     pid_state.desired = targetVelocity;
     stopPID(&pid_state);
-    duty_status = 0;
+    setDuty(0);
   } else {
     if (isEnable(pid_state)) {
       setPIDtarget(&pid_state, targetVelocity);
