@@ -4,8 +4,10 @@ from rclpy.node import Node
 
 
 # Because of transformations
-import tf_conversions
-from tf_conversions.transformations import quaternion_from_euler
+# import tf_conversions
+# from tf_conversions.transformations import quaternion_from_euler
+# from tf.transformations import *
+import PyKDL
 import tf2_ros
 from geometry_msgs.msg import TransformStamped
 
@@ -25,19 +27,19 @@ class Odom_broadcaster(Node):
             'arduino/encoders',
             self.sub_enc_callback,
             10)
-        self.subscription  # prevent unused variable warning
+        self.sub_enc  # prevent unused variable warning
 
         self.pub_odom = self.create_publisher(
             Odometry,
             '/odom',
-            qos_profile=qos_profile_services_default)
-        
-    odom_broadcaster = tf2_ros.TransformBroadcaster(self, qos_profile_services_default)
+            10)
 
-    x = 0.0
-    y = 0.0
-    th = 0.0
-    WHEEL_BASE = 0.177
+        self.odom_broadcaster = tf2_ros.TransformBroadcaster()
+
+        x = 0.0
+        y = 0.0
+        th = 0.0
+        WHEEL_BASE = 0.177
     
     def sub_enc_callback(self, msg):
         
@@ -61,13 +63,18 @@ class Odom_broadcaster(Node):
 
         delta_x = delta_p * cos(th)
         delta_y = delta_p * sin(th)
+        vx = delta_x/dt
+        vy = delta_y/dt
 
         #tf2 update
         x = x + delta_x
         y = y + delta_y
         th = th + delta_th
 
-        odom_quat = quaternion_from_euler(0, 0, th)
+        q = [0, 0, 0, 0]
+        PyKDL.RPY(0,0,th).GetQuaternion(q[0],q[1],q[2],q[3])
+        odom_quat = q
+        # odom_quat = quaternion_from_euler(0, 0, th)
         current_time = self.get_clock().now().to_msg()
 
         t = TransformStamped()
@@ -81,6 +88,29 @@ class Odom_broadcaster(Node):
         t.transform.rotation.y = odom_quat[1]
         t.transform.rotation.z = odom_quat[2]
         t.transform.rotation.w = odom_quat[3]
+
+        odom_broadcaster.sendTransform(t)
+
+        #topic update
+        odom = Odometry()
+        odom.header.frame_id = "odom"
+        odom.header.stamp = current_time
+
+        # set the position
+        odom.pose.pose.position.x = x
+        odom.pose.pose.position.y = y
+        odom.pose.pose.position.z = 0.0
+        odom.pose.pose.orientation.x = odom_quat[0]
+        odom.pose.pose.orientation.y = odom_quat[1]
+        odom.pose.pose.orientation.z = odom_quat[2]
+        odom.pose.pose.orientation.w = odom_quat[3]
+        # set the velocity
+        odom.child_frame_id = "base_link"
+        odom.twist.twist.linear.x = vx
+        odom.twist.twist.linear.y = vy
+        odom.twist.twist.angular.z = vth
+
+        odom_pub.publish(odom)    
 
 
 def main(args=None):
