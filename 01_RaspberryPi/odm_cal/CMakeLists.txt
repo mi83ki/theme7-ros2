@@ -21,6 +21,7 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 add_executable(odm_cal src/odm_cal.cpp)
 target_include_directories(odm_cal PUBLIC
@@ -32,6 +33,7 @@ ament_target_dependencies(
   "std_msgs"
   "nav_msgs"
   "tf2"
+  "tf2_ros"
 )
 
 install(TARGETS odm_cal

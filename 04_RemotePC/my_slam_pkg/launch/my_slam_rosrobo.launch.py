@@ -34,7 +34,7 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher', output='screen',
         arguments=['0', '0', '0.1', '0', '0',
-                   '0', 'base_link', 'laser'],
+                   '0', 'base_footprint', 'laser'],
     )
 
     ld = LaunchDescription()
