@@ -77,6 +77,13 @@ def generate_launch_description():
         ],
     )
 
+    # リアルウォーリーを探せ！ノード
+    find_wally_node = Node(
+        package='find_wally',
+        executable='find_wally',
+        output='screen',
+    )
+
     ld = LaunchDescription()
     ld.add_action(ros2arduino_node)
     ld.add_action(v4l2_camera_node)
@@ -86,5 +93,6 @@ def generate_launch_description():
     ld.add_action(odom_node)
     ld.add_action(static_transform_publisher_node)
     ld.add_action(slam_node)
+    ld.add_action(find_wally_node)
 
     return ld

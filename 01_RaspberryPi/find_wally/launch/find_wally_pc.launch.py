@@ -41,8 +41,8 @@ def generate_launch_description():
         description = 'Path to file with network param file')  
     darknet_ros_cmd = Node(
         package='darknet_ros',
-        node_executable='darknet_ros',
-        node_name='darknet_ros',
+        executable='darknet_ros',
+        name='darknet_ros',
         output='screen',
         parameters=[ros_param_file, network_param_file,
         {
@@ -52,22 +52,22 @@ def generate_launch_description():
         ])
 
     # リアルウォーリーを探せ！ノード
-    find_wally_node = Node(
-        package='find_wally',
-        executable='find_wally',
-        output='screen',
-    )
+    #find_wally_node = Node(
+    #    package='find_wally',
+    #    executable='find_wally',
+    #    output='screen',
+    #)
 
     # rviz2ノード
     rviz2_node = Node(
-        node_name='rviz2',
+        name='rviz2',
         package='rviz2',
-        node_executable='rviz2',
+        executable='rviz2',
         output='screen',
-        arguments=[
-            '-d',
-            get_package_share_directory('find_wally')
-            + '/config/default.rviz'],
+        #arguments=[
+        #    '-d',
+        #    get_package_share_directory('find_wally')
+        #    + '/config/default.rviz'],
     )
 
     ld = LaunchDescription()
@@ -78,7 +78,7 @@ def generate_launch_description():
     ld.add_action(declare_network_param_file_cmd)
     ld.add_action(darknet_ros_cmd)
 
-    ld.add_action(find_wally_node)
+    #ld.add_action(find_wally_node)
     ld.add_action(rviz2_node)
 
     return ld
