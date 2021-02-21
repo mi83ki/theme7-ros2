@@ -24,7 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             'find_wally = find_wally.find_wally:main',
-            'find_wally_moving = find_wally.find_wally_moving:main',
+            'moving_controller = find_wally.moving_controller:main',
             'find_wally_yolo = find_wally.find_wally_yolo:main'
         ],
     },
