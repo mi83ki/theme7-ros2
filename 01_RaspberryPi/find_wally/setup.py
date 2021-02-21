@@ -10,6 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name + '/config', ['config/default.rviz']),
+        ('share/' + package_name + '/config', ['config/mapper_params_offline.yaml']),
         ('share/' + package_name, ['launch/find_wally_only_robo.launch.py']),
         ('share/' + package_name, ['launch/find_wally_robo.launch.py']),
         ('share/' + package_name, ['launch/find_wally_pc.launch.py']),

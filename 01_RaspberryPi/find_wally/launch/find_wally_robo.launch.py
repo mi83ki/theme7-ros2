@@ -23,9 +23,9 @@ def generate_launch_description():
 
     # ライダー用ノード（ROSロボ実行必須）
     rplider_node = Node(
-        node_name='rplidar_composition',
+        name='rplidar_composition',
         package='rplidar_ros',
-        node_executable='rplidar_composition',
+        executable='rplidar_composition',
         output='screen',
         parameters=[{
             'serial_port': '/dev/ttyUSB0',
@@ -62,8 +62,8 @@ def generate_launch_description():
     static_transform_publisher_node = Node(
         package='tf2_ros',
         executable='static_transform_publisher', output='screen',
-        arguments=['0', '0', '0.1', '0', '0',
-                   '0', 'base_footprint', 'laser'],
+        arguments=['0', '0', '0.1', '0', '3.14',
+                   '3.14', 'base_footprint', 'laser'],
     )
 
     # slam_toolboxノード
@@ -73,7 +73,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             get_package_share_directory('find_wally')
-            + 'config/mapper_params_offline.yaml'
+            + '/config/mapper_params_offline.yaml'
         ],
     )
 
