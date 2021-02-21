@@ -60,7 +60,7 @@ class SerialCom:
     # データ送信
     def send(self, data):
         self.comm.write(data.encode())
-        print(data)
+        #print(data)
 
     # シリルポートオープン
     def open(self, tty, baud='115200'):
