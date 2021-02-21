@@ -23,7 +23,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'find_wally = find_wally.find_wally:main'
+            'find_wally = find_wally.find_wally:main',
+            'find_wally_moving = find_wally.find_wally_moving:main',
+            'find_wally_yolo = find_wally.find_wally_yolo:main'
         ],
     },
 )
