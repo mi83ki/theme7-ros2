@@ -1,4 +1,5 @@
 ## リアルウォーリーを探せ一括起動launch
+#import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, SetEnvironmentVariable
@@ -64,10 +65,10 @@ def generate_launch_description():
         package='rviz2',
         executable='rviz2',
         output='screen',
-        #arguments=[
-        #    '-d',
-        #    get_package_share_directory('find_wally')
-        #    + '/config/default.rviz'],
+        arguments=[
+            '-d',
+            get_package_share_directory('find_wally')
+            + '/config/default.rviz'],
     )
 
     ld = LaunchDescription()
