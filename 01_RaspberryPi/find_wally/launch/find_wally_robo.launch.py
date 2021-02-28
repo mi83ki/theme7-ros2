@@ -37,6 +37,13 @@ def generate_launch_description():
         }],
     )
 
+    # キーボードでROSロボを操作するノード
+    keyboard_node = Node(
+        package='teleop_keyboard',
+        executable='teleop_keyboard',
+        output='screen',
+    )
+
     # ジョイコントローラ用ノード
     joy_node = Node(
         package='joy',
@@ -88,8 +95,9 @@ def generate_launch_description():
     ld.add_action(ros2arduino_node)
     ld.add_action(v4l2_camera_node)
     ld.add_action(rplider_node)
-    ld.add_action(joy_node)
-    ld.add_action(rosmarica_node)
+    ld.add_action(keyboard_node)
+    #ld.add_action(joy_node)
+    #ld.add_action(rosmarica_node)
     ld.add_action(odom_node)
     ld.add_action(static_transform_publisher_node)
     ld.add_action(slam_node)
