@@ -25,7 +25,7 @@ class KeyboardPublisher : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "a: left");
       RCLCPP_INFO(this->get_logger(), "s: back");
       RCLCPP_INFO(this->get_logger(), "d: right");
-      RCLCPP_INFO(this->get_logger(), "b: stop");
+      RCLCPP_INFO(this->get_logger(), "b or Space: stop");
     }
 
   private:
