@@ -69,15 +69,14 @@ def generate_launch_description():
             '-d',
             get_package_share_directory('find_wally')
             + '/config/default.rviz'],
+    )
 
     # キーボード入力のトピックを立てるノード
-    pub_key_node = Node(
-        package='teleop_keyboard',
-        executable='pub_keyboard',
-        output='screen',
-    )
-
-    )
+    #pub_key_node = Node(
+    #    package='teleop_keyboard',
+    #    executable='pub_keyboard',
+    #    output='screen',
+    #)
 
     ld = LaunchDescription()
     ld.add_action(declare_image_cmd)
@@ -89,6 +88,6 @@ def generate_launch_description():
 
     #ld.add_action(find_wally_node)
     ld.add_action(rviz2_node)
-    ld.add_action(pub_key_node)
+    #ld.add_action(pub_key_node)
 
     return ld
