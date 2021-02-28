@@ -19,6 +19,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 
 add_executable(teleop_keyboard src/teleop_keyboard.cpp)
 target_include_directories(teleop_keyboard PUBLIC
@@ -28,10 +29,21 @@ ament_target_dependencies(
   teleop_keyboard
   "rclcpp"
   "geometry_msgs"
+  "std_msgs"
+)
+add_executable(pub_keyboard src/pub_keyboard.cpp)
+target_include_directories(pub_keyboard PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  pub_keyboard
+  "rclcpp"
+  "std_msgs"
 )
 
 install(TARGETS
   teleop_keyboard
+  pub_keyboard
   DESTINATION lib/${PROJECT_NAME}
 )
 

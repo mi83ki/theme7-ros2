@@ -15,5 +15,11 @@ def generate_launch_description():
             executable='teleop_keyboard',
             output='screen',
             name='teleop_keyboard'
+        ),
+        launch_ros.actions.Node(
+            package='teleop_keyboard',
+            executable='pub_keyboard',
+            output='screen',
+            name='pub_keyboard'
         )
     ])
