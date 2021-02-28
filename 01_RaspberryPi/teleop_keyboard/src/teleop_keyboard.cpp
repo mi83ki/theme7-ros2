@@ -41,7 +41,7 @@ class KeyboardController : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "a: left");
       RCLCPP_INFO(this->get_logger(), "s: back");
       RCLCPP_INFO(this->get_logger(), "d: right");
-      RCLCPP_INFO(this->get_logger(), "b: stop");
+      RCLCPP_INFO(this->get_logger(), "b or Space: stop");
     }
 
   private:
@@ -60,6 +60,7 @@ class KeyboardController : public rclcpp::Node
           timer_ms = 0;
           break;
         case 'b':
+        case ' ':
           cmd_vel.linear.x = 0.0;
           cmd_vel.angular.z = 0.0;
           timer_ms = 0;
@@ -110,7 +111,7 @@ class KeyboardController : public rclcpp::Node
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<KeyboardController>(0.1, 0.6, 1000));
+  rclcpp::spin(std::make_shared<KeyboardController>(0.1, 0.6, 3000));
   rclcpp::shutdown();
   return 0;
 }
