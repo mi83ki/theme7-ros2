@@ -14,6 +14,5 @@ def generate_launch_description():
 
     ld = LaunchDescription()
     ld.add_action(airobo_bringup)
-    ld.add_action(slam_node)
 
     return ld
