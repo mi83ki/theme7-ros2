@@ -1,4 +1,4 @@
-image: /home/miyazaki/ros2_ws/src/Theme7_ROS2/01_RaspberryPi/airobo_slam/maps/map_miya.pgm
+image: map_miya.pgm
 mode: trinary
 resolution: 0.04
 origin: [-3.38, -6.64, 0]

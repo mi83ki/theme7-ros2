@@ -51,20 +51,11 @@ def generate_launch_description():
         output='screen',
     )
 
-    # tf2ノード
-    static_transform_publisher_node = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher', output='screen',
-        arguments=['0', '0', '0.1', '0', '3.14',
-                   '3.14', 'base_footprint', 'laser'],
-    )
-
     ld = LaunchDescription()
     ld.add_action(ros2arduino_node)
     ld.add_action(v4l2_camera_node)
     ld.add_action(rplider_node)
     ld.add_action(keyboard_node)
     ld.add_action(odom_node)
-    ld.add_action(static_transform_publisher_node)
 
     return ld

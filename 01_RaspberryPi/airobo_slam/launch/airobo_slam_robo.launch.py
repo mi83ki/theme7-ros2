@@ -12,7 +12,16 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([get_package_share_directory('airobo_bringup'), '/airobo_bringup.launch.py']),
     )
 
+    # tf2ノード
+    static_transform_publisher_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher', output='screen',
+        arguments=['0', '0', '0.1', '0', '3.14',
+                   '3.14', 'base_footprint', 'laser'],
+    )
+
     ld = LaunchDescription()
     ld.add_action(airobo_bringup)
+    ld.add_action(static_transform_publisher_node)
 
     return ld
