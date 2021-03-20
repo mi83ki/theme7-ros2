@@ -18,9 +18,9 @@ def generate_launch_description():
         urdf_file_name)
 
     arg = DeclareLaunchArgument(
-            'use_sim_time',
-            default_value='false',
-            description='Use simulation (Gazebo) clock if true')
+        'use_sim_time',
+        default_value='false',
+        description='Use simulation (Gazebo) clock if true')
 
     # arduinoとの通信ノード（ROSロボ実行必須）
     ros2arduino_node = Node(
@@ -92,7 +92,7 @@ def generate_launch_description():
         name='robot_state_publisher',
         output='screen',
         parameters=[{'use_sim_time': use_sim_time}],
-        arguments=[urdf]),
+        arguments=[urdf],
     )
 
     ld = LaunchDescription()
