@@ -13,6 +13,7 @@ setup(
         ('share/' + package_name + '/config', ['config/default.rviz']),
         ('share/' + package_name + '/config', ['config/mapper_params_offline.yaml']),
         ('share/' + package_name + '/map', ['map/map.yaml']),
+        ('share/' + package_name + '/map', ['map/map.pgm']),
         ('share/' + package_name, ['launch/airobo_slam_robo.launch.py']),
         ('share/' + package_name, ['launch/airobo_slam_pc.launch.py']),
     ],
