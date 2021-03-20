@@ -94,6 +94,13 @@ class SerialNode(Node):
             10)
         self.sub_cmd_vel    # prevent unused variable warning
         print('create subscriber: arduino/cmd_vel')
+        self.sub_cmd_vel2 = self.create_subscription(
+            Twist,
+            'cmd_vel',
+            self.cmdVelCallBack,
+            10)
+        self.sub_cmd_vel2    # prevent unused variable warning
+        self.get_logger().info('create subscriber: cmd_vel')
         # サブスクライブ時のコールバック関数
         self.subCallback = None
         # Arduino経過時間[ms]
