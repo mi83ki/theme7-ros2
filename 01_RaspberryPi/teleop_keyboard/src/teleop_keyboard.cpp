@@ -30,7 +30,7 @@ class KeyboardController : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "create publisher: arduino/cmd_vel");
       sub_key = this->create_subscription<std_msgs::msg::Char>(
         "keyboard", 10, std::bind(&KeyboardController::keyboardCB, this, _1));
-      printf("create subscriber: joy");
+      RCLCPP_INFO(this->get_logger(), "create subscriber: joy");
 
       // タイマー周期関数作成
       timer_ = this->create_wall_timer(

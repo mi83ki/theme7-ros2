@@ -30,12 +30,12 @@ class JoyController : public rclcpp::Node
     JoyController()
     : Node("rosmarica_teleop")
     {
-      printf("JoyController started!\r\n");
+      RCLCPP_INFO(this->get_logger(), "JoyController started!");
       pub_twist = this->create_publisher<geometry_msgs::msg::Twist>("arduino/cmd_vel", 10);
-      printf("create publisher: arduino/cmd_vel");
+      RCLCPP_INFO(this->get_logger(), "create publisher: arduino/cmd_vel");
       sub_joy = this->create_subscription<sensor_msgs::msg::Joy>(
         "joy", 10, std::bind(&JoyController::JoyCB, this, _1));
-      printf("create subscriber: joy");
+      RCLCPP_INFO(this->get_logger(), "create subscriber: joy");
 
       // タイマー周期関数作成
       timer_ = this->create_wall_timer(

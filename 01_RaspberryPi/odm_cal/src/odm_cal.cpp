@@ -39,12 +39,12 @@ class OdmPublisher : public rclcpp::Node
     : Node("odm_cal"),
     odom_transform_broadcaster(this)
     {
-      printf("OdmPublisher started!\r\n");
+      RCLCPP_INFO(this->get_logger(), "OdmPublisher started!");
       pub_odm = this->create_publisher<nav_msgs::msg::Odometry>("odom", 10);
-      printf("create publisher: odm_cal\n");
+      RCLCPP_INFO(this->get_logger(), "create publisher: odm_cal");
       sub_enc = this->create_subscription<std_msgs::msg::Int64MultiArray>(
         "arduino/encoders", 10, std::bind(&OdmPublisher::encCB, this, _1));
-      printf("create subscriber: arduino/encoders\n");
+      RCLCPP_INFO(this->get_logger(), "create subscriber: arduino/encoders");
 
       // タイマー周期関数作成
       timer_ = this->create_wall_timer(
@@ -151,7 +151,7 @@ class OdmPublisher : public rclcpp::Node
 
     void timer_callback()
     {
-      printf("[odm_cal] (x, y, th) = (%f, %f, %f)\n", last_odm.pose.pose.position.x, last_odm.pose.pose.position.y, last_theta);
+      RCLCPP_INFO(this->get_logger(), "[odm_cal] (x, y, th) = (%f, %f, %f)", last_odm.pose.pose.position.x, last_odm.pose.pose.position.y, last_theta);
     }
 
 };

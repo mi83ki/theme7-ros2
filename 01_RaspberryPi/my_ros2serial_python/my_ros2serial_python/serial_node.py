@@ -51,7 +51,7 @@ class SerialCom:
                 buff = self.comm.readline()
                 # 受信データ判定
                 if len(buff) > 0:
-                    #print(buff)
+                    #self.get_logger().info(buff)
                     self.recvData = buff
                     self.recvFlag = True
                     # コールバック関数の実行
@@ -60,7 +60,7 @@ class SerialCom:
     # データ送信
     def send(self, data):
         self.comm.write(data.encode())
-        #print(data)
+        #self.get_logger().info(data)
 
     # シリルポートオープン
     def open(self, tty, baud='115200'):
@@ -83,9 +83,9 @@ class SerialNode(Node):
         super().__init__('serial_node')
         # パブリッシャー
         self.pub_enc = self.create_publisher(Int64MultiArray, 'arduino/encoders', 10)
-        print('create publisher: arduino/encoders')
+        self.get_logger().info('create publisher: arduino/encoders')
         self.pub_bumper = self.create_publisher(Bool, 'arduino/bumper', 10)
-        print('create publisher: arduino/bumper')
+        self.get_logger().info('create publisher: arduino/bumper')
         # サブスクライバー
         self.sub_cmd_vel = self.create_subscription(
             Twist,
@@ -93,7 +93,7 @@ class SerialNode(Node):
             self.cmdVelCallBack,
             10)
         self.sub_cmd_vel    # prevent unused variable warning
-        print('create subscriber: arduino/cmd_vel')
+        self.get_logger().info('create subscriber: arduino/cmd_vel')
         self.sub_cmd_vel2 = self.create_subscription(
             Twist,
             'cmd_vel',
