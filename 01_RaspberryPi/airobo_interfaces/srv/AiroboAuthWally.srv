@@ -1,0 +1,6 @@
+# trigger
+---
+# true:認識成功, false:認識失敗(タイムアウト)
+bool result
+# 写真ID
+string photo_id

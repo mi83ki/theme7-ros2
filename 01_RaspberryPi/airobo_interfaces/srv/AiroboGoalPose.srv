@@ -1,0 +1,7 @@
+# x,y,theta
+geometry_msgs/Pose2D pose2d
+---
+uint32 SUCCESS=1
+uint32 TIME_OUT=2
+# 
+uint32 result
