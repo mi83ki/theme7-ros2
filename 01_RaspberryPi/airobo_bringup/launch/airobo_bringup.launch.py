@@ -51,11 +51,33 @@ def generate_launch_description():
         output='screen',
     )
 
+    # tf2ノード
+    # base_footprintからlaserに変換
+    base_footprint_to_laser_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        output='screen',
+        name='base_footprint_to_laser',
+        arguments=['0', '0', '0.11','0', '3.1415', '3.1415',
+                    'base_footprint', 'laser'],
+    )
+    # base_footprintからbase_linkに変換
+    base_footprint_to_base_link_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        output='screen',
+        name='base_footprint_to_base_link',
+        arguments=['0', '0', '0.045', '0', '0', '0',
+                    'base_footprint', 'base_link'],
+    )
+
     ld = LaunchDescription()
     ld.add_action(ros2arduino_node)
     ld.add_action(v4l2_camera_node)
     ld.add_action(rplider_node)
     ld.add_action(keyboard_node)
     ld.add_action(odom_node)
+    ld.add_action(base_footprint_to_laser_node)
+    ld.add_action(base_footprint_to_base_link_node)
 
     return ld
