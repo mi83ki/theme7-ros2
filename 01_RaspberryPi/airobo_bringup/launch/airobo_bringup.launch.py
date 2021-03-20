@@ -1,4 +1,5 @@
 ## airoboの起動launch
+import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, SetEnvironmentVariable
@@ -7,6 +8,20 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 def generate_launch_description():
+    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+    urdf_file_name = 'airobo_description.urdf'
+    print("urdf_file_name : {}".format(urdf_file_name))
+
+    urdf = os.path.join(
+        get_package_share_directory('airobo_description'),
+        'urdf',
+        urdf_file_name)
+
+    arg = DeclareLaunchArgument(
+            'use_sim_time',
+            default_value='false',
+            description='Use simulation (Gazebo) clock if true')
+
     # arduinoとの通信ノード（ROSロボ実行必須）
     ros2arduino_node = Node(
         package='my_ros2serial_python',
@@ -62,22 +77,33 @@ def generate_launch_description():
                     'base_footprint', 'laser'],
     )
     # base_footprintからbase_linkに変換
-    base_footprint_to_base_link_node = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
+    #base_footprint_to_base_link_node = Node(
+    #    package='tf2_ros',
+    #    executable='static_transform_publisher',
+    #    output='screen',
+    #    name='base_footprint_to_base_link',
+    #    arguments=['0', '0', '0.045', '0', '0', '0',
+    #                'base_footprint', 'base_link'],
+    #)
+
+    robot_state_publisher_node = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
         output='screen',
-        name='base_footprint_to_base_link',
-        arguments=['0', '0', '0.045', '0', '0', '0',
-                    'base_footprint', 'base_link'],
+        parameters=[{'use_sim_time': use_sim_time}],
+        arguments=[urdf]),
     )
 
     ld = LaunchDescription()
+    ld.add_action(arg)
     ld.add_action(ros2arduino_node)
     ld.add_action(v4l2_camera_node)
     ld.add_action(rplider_node)
     ld.add_action(keyboard_node)
     ld.add_action(odom_node)
     ld.add_action(base_footprint_to_laser_node)
-    ld.add_action(base_footprint_to_base_link_node)
+    #ld.add_action(base_footprint_to_base_link_node)
+    ld.add_action(robot_state_publisher_node)
 
     return ld
