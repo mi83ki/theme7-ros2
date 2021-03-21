@@ -25,12 +25,12 @@ COdometry::~COdometry() {
 }
 
 fix COdometry::twist2velocityR(fix linearX, fix angularZ) {
-  fix velocity = linearX - FIX_MUL((myWheelTread / 2), angularZ);
+  fix velocity = linearX + FIX_MUL((myWheelTread / 2), angularZ);
   return(velocity);
 }
 
 fix COdometry::twist2velocityL(fix linearX, fix angularZ) {
-  fix velocity = linearX + FIX_MUL((myWheelTread / 2), angularZ);
+  fix velocity = linearX - FIX_MUL((myWheelTread / 2), angularZ);
   return(velocity);
 }
 
