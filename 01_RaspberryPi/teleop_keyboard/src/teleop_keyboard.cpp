@@ -67,12 +67,12 @@ class KeyboardController : public rclcpp::Node
           break;
         case 'a':
           cmd_vel.linear.x = 0.0;
-          cmd_vel.angular.z = -max_angular_vel;
+          cmd_vel.angular.z = max_angular_vel;
           timer_ms = 0;
           break;
         case 'd':
           cmd_vel.linear.x = 0.0;
-          cmd_vel.angular.z = max_angular_vel;
+          cmd_vel.angular.z = -max_angular_vel;
           timer_ms = 0;
           break;
         default :
